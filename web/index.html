@@ -1,1 +1,26 @@
-<!doctype html><meta charset="utf-8"><title>Cutia</title><p>Cutia</p>
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#14161a">
+  <title>Cutia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <nav id="nav" class="nav" aria-label="Categorii">
+      <div class="brand">Cutia</div>
+      <ul id="nav-list"></ul>
+    </nav>
+    <main id="view" class="view"></main>
+  </div>
+  <div id="player" class="player" hidden>
+    <span id="player-name" class="player-name"></span>
+    <button id="player-stop" class="player-btn" type="button">■ Stop</button>
+    <audio id="player-audio" preload="none"></audio>
+  </div>
+  <script type="module" src="app.js"></script>
+  <script type="module" src="sections/acasa.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Rândul de scurtături de pe Acasă. Adaugă o linie: - {name: ..., url: ...}
+- {name: YouTube, url: "https://www.youtube.com/"}
+- {name: Gmail, url: "https://mail.google.com/"}
+- {name: GitHub, url: "https://github.com/"}
+- {name: Claude, url: "https://claude.ai/"}
