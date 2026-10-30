@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import gmail, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import gmail, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -37,6 +37,11 @@ async def home() -> dict:
     out = dict(zip(names, envs))
     out["shortcuts"] = settings.config("shortcuts")
     return out
+
+
+@app.get("/api/bookmarks")
+async def bookmarks() -> dict:
+    return await cached("bookmarks", 10 * 60, lambda: karakeep.fetch(settings), timeout=15)
 
 
 app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")
