@@ -4,7 +4,8 @@ After=network-online.target
 
 [Service]
 WorkingDirectory=%h/cutia
-ExecStart=%h/cutia/.venv/bin/uvicorn cutia.app:app --app-dir backend --host 0.0.0.0 --port 3050 --proxy-headers
+# HTTPS cu certificatul Let's Encrypt pus de acme.sh (vezi README, „HTTPS")
+ExecStart=%h/cutia/.venv/bin/uvicorn cutia.app:app --app-dir backend --host 0.0.0.0 --port 3050 --ssl-certfile %h/cutia/certs/fullchain.pem --ssl-keyfile %h/cutia/certs/key.pem
 Restart=always
 RestartSec=5
 Nice=10
