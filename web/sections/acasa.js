@@ -15,8 +15,10 @@ function dot(state) { return `<span class="dot ${state}"></span>`; }
 function render(d) {
   const w = d.weather.value, g = d.gmail.value, o = d.otto.value, p = d.pihole.value,
         pr = d.printer.value, ph = d.phone.value, yt = d.youtube.value, m = d.modal.value;
-  const printer = !pr ? "" : pr.state === "printing"
-    ? `<div>${dot("warn")}<span class="big warn-text">${pr.progress}%</span></div>`
+  const left = m => m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m} min`;
+  const printer = !pr ? "" : pr.state === "printing" || pr.state === "paused"
+    ? `<div>${dot("warn")}<span class="big warn-text">${pr.progress}%</span></div>
+       <div class="sub">${pr.state === "paused" ? "pe pauză" : pr.remaining_min != null ? `mai are ${left(pr.remaining_min)}` : "printează"}</div>`
     : `<div>${dot(pr.state === "off" ? "" : "ok")}${pr.state === "off" ? "oprită" : "liberă"}</div>`;
   return [
     tile("Ora", `<div class="big" id="clock"></div><div class="sub" id="date"></div>`),

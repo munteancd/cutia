@@ -1,3 +1,4 @@
+import json
 import httpx
 import pytest
 import respx
@@ -134,3 +135,40 @@ async def test_pihole_falls_back_when_first_host_is_not_pihole(s):
     respx.post("http://192.168.0.193/api/auth").respond(json={"session": {"sid": "abc", "valid": True}})
     respx.get("http://192.168.0.193/api/stats/summary").respond(json={"queries": {"percent_blocked": 5.0}})
     assert (await pihole.fetch(s))["up"] is True
+
+
+def state_file(tmp_path, print_state, progress, remaining=None):
+    ps = {"state": print_state, **({"remaining_time_sec": remaining} if remaining is not None else {})}
+    f = tmp_path / "state.json"
+    f.write_text(json.dumps({"machine_status": {"status": 2, "progress": progress}, "print_status": ps}))
+    return Settings(env={"PRINTER_HOST": "192.168.0.239", "PRINTER_STATE": str(f)})
+
+
+def no_mqtt(*a, **k):
+    raise AssertionError("cu fișierul lui Otto nu mai întrebăm imprimanta")
+
+
+async def test_printer_uses_otto_state_when_printing(tmp_path, monkeypatch):
+    monkeypatch.setattr(printer, "_reachable", lambda *a: None)
+    monkeypatch.setattr(printer, "_collect", no_mqtt)
+    s = state_file(tmp_path, "printing", 25, remaining=4920)
+    assert await printer.fetch(s) == {"state": "printing", "progress": 25, "remaining_min": 82}
+
+
+async def test_printer_otto_state_finished_is_idle(tmp_path, monkeypatch):
+    monkeypatch.setattr(printer, "_reachable", lambda *a: None)
+    monkeypatch.setattr(printer, "_collect", no_mqtt)
+    assert await printer.fetch(state_file(tmp_path, "complete", 0)) == {"state": "idle", "progress": None}
+
+
+async def test_printer_otto_state_paused(tmp_path, monkeypatch):
+    monkeypatch.setattr(printer, "_reachable", lambda *a: None)
+    s = state_file(tmp_path, "paused", 40)
+    assert await printer.fetch(s) == {"state": "paused", "progress": 40}
+
+
+async def test_printer_off_even_if_otto_state_says_printing(tmp_path, monkeypatch):
+    def unreachable(*a):
+        raise OSError()
+    monkeypatch.setattr(printer, "_reachable", unreachable)
+    assert await printer.fetch(state_file(tmp_path, "printing", 25)) == {"state": "off", "progress": None}

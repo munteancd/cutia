@@ -1,13 +1,18 @@
 """Imprimanta Elegoo Centauri Carbon 2, prin brokerul MQTT de pe ea.
 
-Cerem un raport de stare (Cmd 0, doar citire) și ascultăm câteva secunde.
+Dacă pe server merge monitorul de imprimantă al lui Otto (PRINTER_STATE = fișierul lui
+de stare, ținut la zi din tot ce trimite imprimanta), citim starea de acolo: imprimanta
+nu mai răspunde la cereri de la clienți neînregistrați, deci întrebată direct pare liberă.
+Fără fișier: cerem un raport (Cmd 0, doar citire) și ascultăm câteva secunde.
 Conexiune refuzată = oprită; niciun progres în fereastră = liberă.
 """
 import asyncio
 import json
 import secrets
+import socket
 import threading
 import time
+from pathlib import Path
 
 import paho.mqtt.client as mqtt
 
@@ -63,9 +68,30 @@ def _progress(msgs: list[dict]) -> int | None:
     return None
 
 
+def _reachable(host: str, port: int) -> None:
+    socket.create_connection((host, port), timeout=1.5).close()
+
+
+def _from_state(st: dict) -> dict:
+    ps, ms = st.get("print_status") or {}, st.get("machine_status") or {}
+    if ps.get("state") not in ("printing", "paused") or ms.get("progress") is None:
+        return {"state": "idle", "progress": None}
+    out = {"state": ps["state"], "progress": int(ms["progress"])}
+    if ps.get("remaining_time_sec"):
+        out["remaining_min"] = round(ps["remaining_time_sec"] / 60)
+    return out
+
+
 async def fetch(s: Settings) -> dict:
     hostport = s.get("PRINTER_HOST") or ""
     host, _, port = hostport.partition(":")
+    state = Path(s.get("PRINTER_STATE") or "/nonexistent").expanduser()
+    if state.exists():
+        try:
+            await asyncio.to_thread(_reachable, host, int(port or 1883))
+        except OSError:
+            return {"state": "off", "progress": None}
+        return _from_state(json.loads(state.read_text(encoding="utf-8")))
     try:
         msgs = await asyncio.to_thread(
             _collect, host, int(port or 1883), s.get("PRINTER_SN") or "",
