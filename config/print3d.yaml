@@ -1,0 +1,10 @@
+# Cardurile din 3D Print. Poza (web/img/print3d/) arată rezultatul real, nu poza
+# de pe site. Adaugă: - {name: ..., url: ..., image: ....webp, description: ...}
+- name: SkipTheCAD
+  url: "https://skipthecad.com/"
+  image: skipthecad.webp
+  description: "Director cu sute de generatoare: formular, poză sau text → STL/3MF, fără CAD."
+- name: ilove3d
+  url: "https://ilove3d.app/en"
+  image: ilove3d.webp
+  description: "Unelte 3D în browser pentru modele de printat."

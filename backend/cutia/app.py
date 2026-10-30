@@ -1,11 +1,13 @@
 import asyncio
 
+import httpx
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import football, gmail, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import football, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -62,6 +64,44 @@ async def league(league_id: int) -> dict:
     if env["ok"]:
         (_live.add if env["value"]["live"] else _live.discard)(league_id)
     return env
+
+
+@app.get("/api/radio")
+async def radio() -> list:
+    return [st | {"play": st["url"] if st["url"].startswith("https://")
+                  else f"/api/radio/{i}/stream"}
+            for i, st in enumerate(settings.config("radio"))]
+
+
+@app.get("/api/radio/{idx}/stream")
+async def radio_stream(idx: int):
+    """Stream-urile http:// trec prin server, ca pagina https să le poată reda."""
+    stations = settings.config("radio")
+    if not 0 <= idx < len(stations) or not stations[idx]["url"].startswith("http://"):
+        raise HTTPException(404, "stație necunoscută")
+    client = httpx.AsyncClient(timeout=httpx.Timeout(10, read=None), follow_redirects=True)
+    upstream = await client.send(client.build_request("GET", stations[idx]["url"]), stream=True)
+
+    async def body():
+        try:
+            async for chunk in upstream.aiter_raw():
+                yield chunk
+        finally:
+            await upstream.aclose()
+            await client.aclose()
+
+    media = upstream.headers.get("content-type", "audio/mpeg")
+    return StreamingResponse(body(), media_type=media, headers={"Cache-Control": "no-store"})
+
+
+@app.get("/api/print3d")
+async def print3d() -> list:
+    return settings.config("print3d")
+
+
+@app.get("/api/tv")
+async def tv() -> dict:
+    return await cached("tv", 24 * 60 * 60, lambda: iptv.fetch(settings), timeout=30)
 
 
 app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")

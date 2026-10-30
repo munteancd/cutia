@@ -25,7 +25,7 @@ function drawNav() {
 }
 
 function current() {
-  const id = location.hash.replace(/^#\//, "") || "acasa";
+  const id = location.hash.replace(/^#\//, "").split("?")[0] || "acasa";
   return sections.has(id) ? id : "acasa";
 }
 

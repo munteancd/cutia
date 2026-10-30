@@ -1,0 +1,23 @@
+# Stațiile din categoria Radio. Adaugă: - {group: ..., name: ..., url: ...}
+# Stream-urile http:// trec prin server (pagina e pe https), cele https:// merg direct.
+- {group: România, name: Europa FM, url: "http://astreaming.europafm.ro:8000/europafm_aacp48k"}
+- {group: România, name: Kiss FM, url: "https://live.kissfm.ro/kissfm.aacp"}
+- {group: România, name: Magic FM, url: "https://live.magicfm.ro/magicfm.aacp"}
+- {group: România, name: Rock FM, url: "https://live.rockfm.ro/rockfm.aacp"}
+- {group: România, name: Digi FM, url: "http://edge76.rdsnet.ro:84/digifm/digifm.mp3"}
+- {group: România, name: Pro FM, url: "http://edge126.rdsnet.ro:84/profm/profm.mp3"}
+- {group: România, name: Radio ZU, url: "http://zuicast.digitalag.ro:9420/zu"}
+- {group: România, name: Virgin Radio, url: "http://astreaming.virginradio.ro:8000/virgin_aacp_64k"}
+- {group: România, name: Radio Guerrilla, url: "http://live.guerrillaradio.ro:8010/guerrilla.aac"}
+- {group: România, name: România Actualități, url: "http://89.238.227.6:8006/"}
+- {group: România, name: România Muzical, url: "http://stream2.srr.ro:8026/"}
+- {group: România, name: România Cultural, url: "http://stream2.srr.ro:8012/"}
+- {group: România, name: Radio Timișoara, url: "http://89.238.227.6:8352/"}
+- {group: SomaFM, name: Groove Salad, url: "https://ice1.somafm.com/groovesalad-128-mp3"}
+- {group: SomaFM, name: Drone Zone, url: "https://ice1.somafm.com/dronezone-128-mp3"}
+- {group: SomaFM, name: Secret Agent, url: "https://ice1.somafm.com/secretagent-128-mp3"}
+- {group: SomaFM, name: Indie Pop Rocks!, url: "https://ice1.somafm.com/indiepop-128-mp3"}
+- {group: SomaFM, name: Lush, url: "https://ice1.somafm.com/lush-128-mp3"}
+- {group: SomaFM, name: Deep Space One, url: "https://ice1.somafm.com/deepspaceone-128-mp3"}
+- {group: SomaFM, name: Left Coast 70s, url: "https://ice1.somafm.com/seventies-128-mp3"}
+- {group: SomaFM, name: DEF CON Radio, url: "https://ice1.somafm.com/defcon-128-mp3"}
