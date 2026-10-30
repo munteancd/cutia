@@ -252,3 +252,6 @@ button { font: inherit; color: inherit; }
 .note-view .check.done { color: var(--muted); text-decoration: line-through; }
 .note-ed .tabs { justify-content: space-between; align-items: center; }
 @media (max-width: 700px) { .notes { grid-template-columns: 1fr; } .printer-row .cam { width: 110px; } }
+.card.soon { opacity: .55; }
+.card.soon:hover { background: var(--panel); }
+.badge { font-size: 11px; background: var(--panel-2); color: var(--muted); border-radius: 999px; padding: 2px 8px; margin-left: 4px; font-weight: 500; }

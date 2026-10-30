@@ -1,7 +1,7 @@
 // Shell-ul: meniul, rutarea pe #/<id> și playerul comun (radioul nu se oprește
 // când schimbi categoria).
 
-const ORDER = ["acasa", "notite", "bookmarks", "unelte", "print3d", "sport", "radio", "tv"];
+const ORDER = ["acasa", "notite", "bookmarks", "unelte", "jocuri", "print3d", "sport", "radio", "tv"];
 const sections = new Map();
 const view = document.getElementById("view");
 const navList = document.getElementById("nav-list");

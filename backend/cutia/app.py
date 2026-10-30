@@ -101,6 +101,11 @@ async def print3d() -> list:
     return settings.config("print3d")
 
 
+@app.get("/api/jocuri")
+async def jocuri() -> list:
+    return settings.config("jocuri")
+
+
 @app.get("/api/tv")
 async def tv() -> dict:
     return await cached("tv", 24 * 60 * 60, lambda: iptv.fetch(settings), timeout=30)
