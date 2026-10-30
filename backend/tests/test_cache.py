@@ -34,7 +34,9 @@ async def test_cache_serves_stale_on_error():
         raise RuntimeError("pică")
 
     await cache.cached("k", 0, good)
-    env = await cache.cached("k", 0, bad)
+    await cache.cached("k", 0, bad)   # pornește reîmprospătarea din fundal, care pică
+    await asyncio.sleep(0.05)
+    env = await cache.cached("k", 60, bad)
     assert env["ok"] is True
     assert env["value"] == 5
     assert env["stale"] is True
@@ -58,3 +60,39 @@ async def test_slow_source_does_not_block():
     env = await cache.cached("k", 60, slow, timeout=0.2)
     assert time.monotonic() - t < 1
     assert env["ok"] is False
+
+
+async def test_expired_value_returned_at_once_and_refreshed_in_background():
+    n = 0
+
+    async def slow():
+        nonlocal n
+        n += 1
+        if n > 1:
+            await asyncio.sleep(0.5)
+        return n
+
+    await cache.cached("k", 0, slow)            # prima dată: așteptăm (n=1)
+    t = time.monotonic()
+    env = await cache.cached("k", 0, slow)      # expirat: primim imediat valoarea veche
+    assert time.monotonic() - t < 0.2
+    assert env["value"] == 1 and env["ok"]
+    await asyncio.sleep(0.7)                    # reîmprospătarea din fundal a terminat
+    assert (await cache.cached("k", 60, slow))["value"] == 2
+
+
+async def test_background_refresh_failure_marks_stale():
+    n = 0
+
+    async def flaky():
+        nonlocal n
+        n += 1
+        if n > 1:
+            raise RuntimeError("căzut")
+        return "bun"
+
+    await cache.cached("k", 0, flaky)
+    await cache.cached("k", 0, flaky)           # pornește reîmprospătarea, care pică
+    await asyncio.sleep(0.05)
+    env = await cache.cached("k", 60, flaky)
+    assert env["value"] == "bun" and env["stale"] is True and "căzut" in env["error"]
