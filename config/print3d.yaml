@@ -12,6 +12,40 @@
   image: ilove3d.webp
   description: "Unelte 3D în browser pentru modele de printat."
 
+
+# --- alese de mine (pozele = rezultatul real, de pe pagina modelului) ---
+- {group: Litofanii, name: ItsLitho, url: "https://tool.itslitho.com/CreateModel", image: itslitho.webp, description: "Poză → litofanie: plată, curbată, cilindru, lampă, cu ramă."}
+- {group: Litofanii, name: Make My Lithophane, url: "https://makerworld.com/en/makerlab/makeMyLithophane", icon: "🖼️", description: "Litofanie din poză, de la Bambu (cere cont MakerWorld)."}
+- {group: Litofanii, name: Text litofanie, url: "https://makerworld.com/en/models/1825405-customizable-parametric-lithophane-text#profileId-1948749", image: text-litofanie.webp, description: "Textul apare doar când e lumină în spate."}
+- {group: Cutii și organizare, name: Cutie cu capac glisant, url: "https://makerworld.com/en/models/1613400-customizable-box-with-slide-lid-parametric-box#profileId-1758568", image: cutie-glisanta.webp, description: "Orice dimensiune, capac care alunecă, se stivuiesc."}
+- {group: Cutii și organizare, name: Any Box Generator, url: "https://makerworld.com/en/models/2153487-any-box-generator#profileId-2334156", image: any-box.webp, description: "Cutii cu despărțitoare, texturi, magneți, Gridfinity."}
+- {group: Cutii și organizare, name: Borcan, url: "https://makerworld.com/en/models/1178706-jar-generator#profileId-1188452", image: borcan.webp, description: "Borcan cu capac înfiletat, pe măsura ta."}
+- {group: Cutii și organizare, name: SKÅDIS – cutii și rafturi, url: "https://makerworld.com/en/models/799571-ikea-skadis-add-ons-parametric-bins-and-shelves", image: skadis-cutii.webp, description: "Cutiuțe și poliță pentru panoul IKEA SKÅDIS."}
+- {group: Cutii și organizare, name: SKÅDIS – panou, url: "https://makerworld.com/en/models/2152358-fully-customisable-skadis-pegboard-generator#profileId-2904413", image: skadis-panou.webp, description: "Panou perforat SKÅDIS de orice mărime, din bucăți."}
+- {group: Cutii și organizare, name: MultiBuild, url: "https://multibuild.io/", image: multibuild.webp, description: "Sistem modular de organizare: plăci, cutii, sertare."}
+- {group: Nume și text, name: Text2STL, url: "https://text2stl.mestres.fr/en-us/generator", image: text2stl.webp, description: "Text 3D în browser, peste 1000 de fonturi."}
+- {group: Nume și text, name: Inițială și nume, url: "https://makerworld.com/en/models/2061852-layered-initial-and-name-sign#profileId-2226344", image: initiala-nume.webp, description: "Inițiala mare cu numele peste ea, în straturi."}
+- {group: Nume și text, name: Plăcuță pe 2 rânduri, url: "https://makerworld.com/en/models/436531-sweeping-2-line-name-plate-customizable#profileId-341843", image: placuta-2-randuri.webp, description: "Plăcuță de birou curbată, două rânduri de text."}
+- {group: Nume și text, name: Nume pe creion, url: "https://makerworld.com/en/models/2374615-customizable-parametric-pencil-slide-on-name#profileId-2599579", image: nume-creion.webp, description: "Nume care se infilează pe creion sau pix."}
+- {group: Nume și text, name: Nume din cărămizi, url: "https://makerworld.com/en/models/492674-brick-your-name-customize-on-makerworld#profileId-406303", image: nume-caramizi.webp, description: "Numele ca din piese de construit."}
+- {group: Nume și text, name: Ambigramă, url: "https://makerworld.com/en/models/489660-ambigram-generator-fully-customizable-v2-2#profileId-402956", image: ambigrama.webp, description: "Două cuvinte: vezi unul din față, altul din lateral."}
+- {group: Nume și text, name: Iluzie cu 2 texte, url: "https://makerworld.com/en/models/1993322-dual-text-illusion-v2-0#profileId-2145487", image: iluzie-dubla.webp, description: "Un obiect, două nume, după unghiul din care privești."}
+- {group: Nume și text, name: Cutie LED cu nume, url: "https://makerworld.com/en/models/3241913-custom-led-name-light-box-parametric-ams-ready#profileId-3673238", image: cutie-led.webp, description: "Nume luminat cu bandă LED, multicolor."}
+- {group: Nume și text, name: Mărgele cu litere, url: "https://makerworld.com/en/models/2587491-customizable-letter-beads-letter-beads#profileId-2857222", image: margele-litere.webp, description: "Mărgele cu litere pentru brățări."}
+- {group: Breloace și QR, name: Breloc cu nume, url: "https://makerworld.com/en/models/1467612-customizable-parametric-name-keychain#profileId-1531242", image: breloc-nume.webp, description: "Nume scris de mână, două culori."}
+- {group: Breloace și QR, name: Breloc cu nume (o culoare), url: "https://makerworld.com/en/models/2115391-name-keychain-generator-no-ams#profileId-2778484", image: breloc-nume-1culoare.webp, description: "Fără AMS: schimbi filamentul la o înălțime."}
+- {group: Breloace și QR, name: Breloc număr de mașină, url: "https://makerworld.com/en/models/477243-car-plate-keychain-creator-openscad#profileId-388283", image: breloc-numar.webp, description: "Numărul tău de înmatriculare, ca breloc."}
+- {group: Breloace și QR, name: QR cu suport, url: "https://makerworld.com/en/models/2876996-customizable-qr-code-with-stand#profileId-3829874", image: qr-suport.webp, description: "Cod QR (WiFi, link) care stă în picioare pe masă."}
+- {group: Breloace și QR, name: QR parametric, url: "https://makerworld.com/en/models/476280-customizable-parametric-qr-code-generator#profileId-387583", image: qr-parametric.webp, description: "Cod QR cu etichetă, inel sau magneți."}
+- {group: Vaze, name: Make My Vase, url: "https://makerworld.com/en/makerlab/makeMyVase", icon: "🏺", description: "Vază din poză sau formă, de la Bambu (cere cont MakerWorld)."}
+- {group: Vaze, name: Vaze PrintPal, url: "https://printpal.io/tools/vase-generator", image: vaza-printpal.webp, description: "Profil, răsucire și textură; STL direct, fără cont."}
+- {group: Mecanice, name: Șuruburi și piulițe, url: "https://makerworld.com/en/models/1055250-screw-generator-parametric-screws-nuts-washer#profileId-1042636", image: suruburi.webp, description: "Șuruburi ISO/DIN, piulițe și șaibe."}
+- {group: Mecanice, name: Roți dințate, url: "https://makerworld.com/en/models/1049303-gear-generator-parametric-gears-racks#profileId-1035715", image: roti-dintate.webp, description: "Roți drepte, elicoidale, conice și cremaliere."}
+- {group: Mecanice, name: Rulmenți, url: "https://makerworld.com/en/models/1083205-bearing-generator-parametric-ball-bearings#profileId-1075444", image: rulmenti.webp, description: "Rulmenți cu bile sau role, printați dintr-o bucată."}
+- {group: Mecanice, name: Tije filetate, url: "https://makerworld.com/en/models/1073355-thread-generator-parametric-threaded-rods-nuts#profileId-1063707", image: filete.webp, description: "Tije și piulițe filetate de orice pas."}
+- {group: Mecanice, name: Duză de aspirator, url: "https://makerworld.com/en/models/2488033-vacuum-nozzle-round-or-flat-tip-customizable#profileId-2735860", image: duza-aspirator.webp, description: "Duză rotundă sau plată pe diametrul aspiratorului tău."}
+- {group: Jocuri, name: DiceGen, url: "https://dicegen.com/", image: zaruri.webp, description: "Zaruri D4–D20 cu fonturi și simboluri proprii."}
+
 # --- ilove3d: generatoare (totul rulează în browser, nimic nu se urcă) ---
 - {group: "ilove3d · Generatoare", icon: "🏷️", name: Breloc cu nume, url: "https://ilove3d.app/en/tools/keychain", description: "Nume, font, inel și plăcuță → STL."}
 - {group: "ilove3d · Generatoare", icon: "🔤", name: Text 3D, url: "https://ilove3d.app/en/tools/text-to-3d", description: "Semne, nume, topper de tort; 9 fonturi, bază și inel."}

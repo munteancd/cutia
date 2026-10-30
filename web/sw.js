@@ -11,7 +11,8 @@ self.addEventListener("fetch", e => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin || url.pathname.startsWith("/api/")) return;
   // rețea întâi (ca să vezi imediat modificările), cache doar dacă serverul nu răspunde
-  e.respondWith(fetch(e.request).then(r => {
+  // no-cache = întreabă serverul de fiecare dată (304 dacă nu s-a schimbat nimic)
+  e.respondWith(fetch(e.request, { cache: "no-cache" }).then(r => {
     const copy = r.clone();
     caches.open(CACHE).then(c => c.put(e.request, copy));
     return r;
