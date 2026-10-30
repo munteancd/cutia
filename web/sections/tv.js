@@ -12,10 +12,14 @@ function loadHls() {
 }
 
 const COUNTRY_RO = { Romania: "România" };
+// Platforme cu cont (canalele lor nu se pot reda aici) — doar scurtături.
+const LINKS = [{ name: "Digi Online", url: "https://www.digionline.ro/" }];
 let hls = null;
 
 registerSection("tv", "TV", "📺", async el => {
   el.innerHTML = `<h1>TV</h1>
+    <div class="tv-links">${LINKS.map(l => `<a class="shortcut" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <img src="https://icons.duckduckgo.com/ip3/${esc(new URL(l.url).hostname)}.ico" alt="">${esc(l.name)}</a>`).join("")}</div>
     <div class="tv-wrap">
       <div class="tv-screen"><video id="tv-video" controls playsinline></video>
         <div id="tv-msg" class="tv-msg">Alege un canal.</div></div>

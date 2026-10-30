@@ -1,6 +1,6 @@
 # Rândul de scurtături de pe Acasă. Adaugă o linie: - {name: ..., url: ...}
+# Pentru o aplicație (claude://, steam://…) pune și icon: <site> pentru iconiță.
 - {name: YouTube, url: "https://www.youtube.com/"}
 - {name: Gmail, url: "https://mail.google.com/"}
 - {name: GitHub, url: "https://github.com/"}
-- {name: Claude, url: "https://claude.ai/"}
-- {name: Digi Online, url: "https://www.digionline.ro/"}
+- {name: Claude, url: "claude://", icon: claude.ai}

@@ -33,8 +33,10 @@ function render(d) {
 
 function shortcuts(list) {
   return list.map(s => {
-    const host = new URL(s.url).hostname;
-    return `<a class="shortcut" href="${esc(s.url)}" target="_blank" rel="noopener">
+    // claude://, steam://… deschid aplicația de pe PC; iconița vine din `icon`
+    const app = !/^https?:/.test(s.url);
+    const host = s.icon || new URL(s.url).hostname;
+    return `<a class="shortcut" href="${esc(s.url)}" ${app ? "" : `target="_blank" rel="noopener"`}>
       <img src="https://icons.duckduckgo.com/ip3/${esc(host)}.ico" alt="" loading="lazy">${esc(s.name)}</a>`;
   }).join("");
 }

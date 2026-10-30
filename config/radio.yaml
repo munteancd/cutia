@@ -21,3 +21,58 @@
 - {group: SomaFM, name: Deep Space One, url: "https://ice1.somafm.com/deepspaceone-128-mp3"}
 - {group: SomaFM, name: Left Coast 70s, url: "https://ice1.somafm.com/seventies-128-mp3"}
 - {group: SomaFM, name: DEF CON Radio, url: "https://ice1.somafm.com/defcon-128-mp3"}
+# --- Pe genuri muzicale (verificate 30 oct 2026) ---
+- {group: "Rock", name: "FIP Rock", url: "https://icecast.radiofrance.fr/fiprock-midfi.mp3"}
+- {group: "Rock", name: "Radio Paradise Rock", url: "https://stream.radioparadise.com/rock-128"}
+- {group: "Rock", name: "Classic Rock (0N)", url: "https://0n-classicrock.radionetz.de/0n-classicrock.mp3"}
+- {group: "Rock", name: "Exclusively Pink Floyd", url: "https://streaming.exclusive.radio/er/pinkfloyd/icecast.audio"}
+- {group: "Rock", name: "Best Of Rock – Alternative", url: "https://bestofrockfm.stream.vip/altrock/mp3-256/bestofrock.fm/"}
+- {group: "Metal", name: "FIP Metal", url: "https://icecast.radiofrance.fr/fipmetal-midfi.mp3"}
+- {group: "Metal", name: "Rock Antenne Heavy Metal", url: "https://stream.rockantenne.de/heavy-metal/stream/aacp"}
+- {group: "Metal", name: "100 Greatest Heavy Metal", url: "https://cast1.torontocast.com:4660/stream"}
+- {group: "Metal", name: "Megarock Radio", url: "https://stream3.megarockradio.net:80/"}
+- {group: "Pop & hituri", name: "FIP Pop", url: "https://icecast.radiofrance.fr/fippop-midfi.mp3"}
+- {group: "Pop & hituri", name: "SWR3", url: "https://liveradio.swr.de/sw282p3/swr3/play.mp3"}
+- {group: "Pop & hituri", name: "LOS40 España", url: "https://playerservices.streamtheworld.com/api/livestream-redirect/Los40.mp3"}
+- {group: "Pop & hituri", name: "Radio Swiss Pop", url: "https://stream.srg-ssr.ch/m/rsp/mp3_128"}
+- {group: "Dance & electronic", name: "FIP Electro", url: "https://icecast.radiofrance.fr/fipelectro-midfi.mp3"}
+- {group: "Dance & electronic", name: "Intense Radio – We Love Dance", url: "https://secure.live-streams.nl/main"}
+- {group: "Dance & electronic", name: "Heart Dance", url: "https://media-ssl.musicradio.com/HeartDanceMP3"}
+- {group: "Dance & electronic", name: "Technolovers Deep House", url: "https://stream.technolovers.fm/deep-house"}
+- {group: "Dance & electronic", name: "TechnoBase.FM", url: "https://listener3.mp3.tb-group.fm/tb.mp3"}
+- {group: "Dance & electronic", name: "Trance (rautemusik)", url: "https://trance-high.rautemusik.fm/"}
+- {group: "Hip-hop & R&B", name: "FIP Hip-Hop", url: "https://icecast.radiofrance.fr/fiphiphop-midfi.mp3"}
+- {group: "Hip-hop & R&B", name: "WEFUNK", url: "https://s-00.wefunkradio.com:8443/wefunk64.mp3"}
+- {group: "Hip-hop & R&B", name: "Black on Radio (0N)", url: "https://0n-black.radionetz.de/0n-black.mp3"}
+- {group: "Hip-hop & R&B", name: "LOS40 Urban", url: "https://playerservices.streamtheworld.com/api/livestream-redirect/LOS40_URBAN.mp3"}
+- {group: "Jazz", name: "Radio Swiss Jazz", url: "https://stream.srg-ssr.ch/m/rsj/mp3_128"}
+- {group: "Jazz", name: "FIP Jazz", url: "https://icecast.radiofrance.fr/fipjazz-midfi.mp3"}
+- {group: "Jazz", name: "Smooth Jazz (0N)", url: "https://0n-smoothjazz.radionetz.de/0n-smoothjazz.aac"}
+- {group: "Jazz", name: "Jazzradio.fr", url: "https://jazz-wr17.ice.infomaniak.ch/jazz-wr17-128.mp3"}
+- {group: "Blues", name: "181.FM True Blues", url: "https://listen.181fm.com/181-blues_128k.mp3"}
+- {group: "Blues", name: "Monte Carlo Wonderful Blues", url: "https://mc-blues.hostingradio.ru/blues96.aacp"}
+- {group: "Blues", name: "Radio Art Acoustic Blues", url: "https://live.radioart.com/fAcoustic_blues.mp3"}
+- {group: "Clasică", name: "Radio Swiss Classic", url: "https://stream.srg-ssr.ch/m/rsc_de/mp3_128"}
+- {group: "Clasică", name: "France Musique", url: "https://icecast.radiofrance.fr/francemusique-midfi.mp3"}
+- {group: "Clasică", name: "Venice Classic Radio", url: "https://uk2.streamingpulse.com/ssl/vcr1"}
+- {group: "Clasică", name: "BR-Klassik", url: "https://dispatcher.rndfnk.com/br/brklassik/live/mp3/high"}
+- {group: "Chill & lounge", name: "Smooth Chill", url: "https://media-ssl.musicradio.com/ChillMP3"}
+- {group: "Chill & lounge", name: "Café del Mar", url: "https://streams.radio.co/se1a320b47/listen"}
+- {group: "Chill & lounge", name: "Chillout (0N)", url: "https://0n-chillout.radionetz.de/0n-chillout.aac"}
+- {group: "Chill & lounge", name: "Radio Paradise Mellow", url: "https://stream.radioparadise.com/mellow-128"}
+- {group: "Anii '70–'80", name: "Heart 80s", url: "https://media-ssl.musicradio.com/Heart80sMP3"}
+- {group: "Anii '70–'80", name: "Heart 70s", url: "https://media-ssl.musicradio.com/Heart70sMP3"}
+- {group: "Anii '70–'80", name: "SomaFM Underground 80s", url: "https://ice1.somafm.com/u80s-128-mp3"}
+- {group: "Anii '70–'80", name: "Funky Radio", url: "https://funkyradio.streamingmedia.it/play.mp3"}
+- {group: "Anii '90", name: "Heart 90s", url: "https://media-ssl.musicradio.com/Heart90sMP3"}
+- {group: "Anii '90", name: "90s on Radio (0N)", url: "https://0n-90s.radionetz.de/0n-90s.mp3"}
+- {group: "Anii '90", name: "Radio 90s Eurodance", url: "https://listen1.myradio24.com/5967"}
+- {group: "Reggae", name: "FIP Reggae", url: "https://icecast.radiofrance.fr/fipreggae-midfi.mp3"}
+- {group: "Reggae", name: "SomaFM Heavyweight Reggae", url: "https://ice1.somafm.com/reggae-128-mp3"}
+- {group: "Reggae", name: "Reggae Chill Café", url: "https://maggie.torontocast.com:2020/stream/reggaechillcafe"}
+- {group: "Country", name: "181.FM Kickin' Country", url: "https://listen.181fm.com/181-kickincountry_128k.mp3"}
+- {group: "Country", name: "SomaFM Boot Liquor", url: "https://ice1.somafm.com/bootliquor-128-mp3"}
+- {group: "Country", name: "Radio Country Live NY", url: "https://streaming.radiostreamlive.com/radiocountrylive_devices"}
+- {group: "Muzică din lume", name: "FIP Monde", url: "https://icecast.radiofrance.fr/fipworld-midfi.mp3"}
+- {group: "Muzică din lume", name: "FIP", url: "https://icecast.radiofrance.fr/fip-midfi.mp3"}
+- {group: "Muzică din lume", name: "Radio Paradise Global", url: "https://stream.radioparadise.com/global-128"}
