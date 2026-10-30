@@ -1,0 +1,83 @@
+<h2>Cum arată pagina când o deschizi?</h2>
+<p class="subtitle">Trei feluri de a așeza același conținut. Conținutul e inventat, doar ca să vezi forma. Click pe cel care-ți place (sau pe mai multe).</p>
+
+<style>
+  .w{border:1px solid var(--border,#3334);border-radius:8px;padding:8px;font-size:12px;background:rgba(127,127,127,.06)}
+  .w b{display:block;font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+  .big{font-size:22px;font-weight:600}
+  .row{display:flex;gap:6px;flex-wrap:wrap}
+  .row>.w{flex:1;min-width:70px}
+  .tabs{display:flex;gap:4px;margin:8px 0 6px;flex-wrap:wrap}
+  .tabs span{padding:3px 8px;border-radius:12px;background:rgba(127,127,127,.15);font-size:11px}
+  .tabs span.on{background:#4a7dff;color:#fff}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .tiles div{border-radius:6px;background:rgba(127,127,127,.12);padding:8px 4px;text-align:center;font-size:11px}
+  .ok{color:#2ea043}.warn{color:#d29922}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .side{display:flex;gap:8px}
+  .side .nav{width:80px;display:flex;flex-direction:column;gap:3px;font-size:11px}
+  .side .nav span{padding:4px 6px;border-radius:5px}
+  .side .nav span.on{background:#4a7dff;color:#fff}
+</style>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:10px">
+      <div class="row">
+        <div class="w"><b>Ora</b><span class="big">14:32</span><br>joi, 30 oct</div>
+        <div class="w"><b>Moșnița</b><span class="big">12°</span><br>înnorat</div>
+        <div class="w"><b>Gmail</b><span class="big">3</span><br>necitite</div>
+        <div class="w"><b>WhatsApp</b><span class="big">5</span><br>necitite</div>
+      </div>
+      <div class="row" style="margin-top:6px">
+        <div class="w"><b>Otto</b><span class="ok">● merge</span></div>
+        <div class="w"><b>Pi-hole</b><span class="ok">● 23% blocat</span></div>
+        <div class="w"><b>Imprimanta</b><span class="warn">● 64% · 1h20</span></div>
+      </div>
+      <div class="tabs"><span class="on">Favorite</span><span>Bookmarks</span><span>3D Print</span><span>Radio</span><span>TV</span><span>Unelte</span></div>
+      <div class="tiles"><div>YouTube</div><div>Gmail</div><div>GitHub</div><div>Claude</div><div>Printables</div><div>SkipTheCAD</div><div>Karakeep</div><div>eMAG</div></div>
+    </div>
+    <div class="card-body"><h3>A · Starea sus, restul pe file</h3><p>Sus vezi dintr-o privire ce contează. Dedesubt, file pentru fiecare categorie. Arată tot ce ai cerut fără să derulezi.</p></div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:10px">
+      <div class="grid">
+        <div class="w"><b>Ora</b><span class="big">14:32</span></div>
+        <div class="w"><b>Vremea</b><span class="big">12°</span></div>
+        <div class="w"><b>Mesaje</b>Gmail 3 · WA 5</div>
+        <div class="w"><b>Otto / Pi-hole</b><span class="ok">● ● ok</span></div>
+        <div class="w"><b>Radio</b>▶ SomaFM Groove</div>
+        <div class="w"><b>Imprimanta</b><span class="warn">64%</span></div>
+        <div class="w" style="grid-column:span 2"><b>Favorite</b>YouTube · Gmail · GitHub · Claude · Printables</div>
+        <div class="w"><b>3D Print</b>SkipTheCAD · ilove3d</div>
+        <div class="w"><b>Unelte</b>PDF · convertor · QR</div>
+        <div class="w" style="grid-column:span 2"><b>Bookmarks (Karakeep)</b>Docker · Electronică · Jocuri…</div>
+      </div>
+    </div>
+    <div class="card-body"><h3>B · Totul pe un singur perete</h3><p>Fiecare lucru e o căsuță pe aceeași pagină, ca un panou. Fără file: vezi tot deodată, dar se umple repede.</p></div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:10px">
+      <div class="side">
+        <div class="nav"><span class="on">🏠 Acasă</span><span>🔖 Bookmarks</span><span>🖨 3D Print</span><span>📻 Radio</span><span>📺 TV</span><span>🛠 Unelte</span></div>
+        <div style="flex:1">
+          <div class="row">
+            <div class="w"><b>14:32</b>12° înnorat</div>
+            <div class="w"><b>Mesaje</b>Gmail 3 · WA 5</div>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <div class="w"><b>Otto</b><span class="ok">●</span></div>
+            <div class="w"><b>Pi-hole</b><span class="ok">●</span></div>
+            <div class="w"><b>Print</b><span class="warn">64%</span></div>
+          </div>
+          <div class="tiles" style="margin-top:6px"><div>YouTube</div><div>Gmail</div><div>GitHub</div><div>Claude</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body"><h3>C · Meniu în stânga, ca o aplicație</h3><p>Categoriile stau într-o bară laterală. „Acasă" e starea + favoritele; fiecare categorie are pagina ei întreagă.</p></div>
+  </div>
+
+</div>
