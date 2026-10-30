@@ -84,3 +84,5 @@ audio.addEventListener("error", () => {
   if (!bar.hidden && audio.getAttribute("src")) nameEl.textContent = nameEl.textContent.replace("▶ ", "") + " — indisponibil";
 });
 document.getElementById("player-stop").addEventListener("click", stop);
+
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
