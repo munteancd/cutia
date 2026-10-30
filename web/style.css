@@ -177,3 +177,23 @@ button { font: inherit; color: inherit; }
 .qr-out:empty { display: none; }
 .tool-form .tabs { margin-bottom: 0; }
 .tool-form [hidden] { display: none !important; }
+
+/* unelte cu fișiere (PDF, poze) */
+.tool-form label.player-btn { display: inline-block; }
+.tool-form .link { color: var(--accent); cursor: pointer; }
+.search.inline { width: auto; flex: 1; min-width: 140px; margin: 0; padding: 7px 12px; }
+.sig-box { display: flex; align-items: center; gap: 14px; }
+.sig-box img { max-height: 54px; max-width: 200px; background: #fff; border-radius: 6px; padding: 4px; }
+.pdf-pages { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 18px; }
+.pdf-page { position: relative; box-shadow: 0 2px 12px rgba(0,0,0,.5); cursor: crosshair; }
+.pdf-page canvas { display: block; max-width: 100%; }
+.pdf-item { position: absolute; cursor: move; touch-action: none; line-height: 1.25; color: #000; white-space: nowrap; outline: 1px dashed rgba(74,125,255,.8); }
+.pdf-item img { display: block; width: 100%; pointer-events: none; }
+.pdf-item .del { position: absolute; top: -11px; right: -11px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: var(--bad); color: #fff; cursor: pointer; line-height: 1; padding: 0; }
+.pdf-item .rs { position: absolute; right: -6px; bottom: -6px; width: 12px; height: 12px; background: var(--accent); border-radius: 3px; cursor: nwse-resize; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 18px; max-width: 1000px; }
+.thumb { background: var(--panel); border-radius: 10px; overflow: hidden; }
+.thumb img { width: 100%; aspect-ratio: 3 / 4; object-fit: contain; background: var(--panel-2); display: block; }
+.thumb-bar { display: flex; align-items: center; gap: 4px; padding: 6px; }
+.thumb-bar span { flex: 1; color: var(--muted); font-size: 13px; padding-left: 4px; }
+.thumb-bar button { background: var(--panel-2); border: 0; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; }

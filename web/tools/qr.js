@@ -1,9 +1,7 @@
 // Generator de cod QR (text/link sau WiFi), descărcabil ca PNG.
+import { loadScript } from "./lib.js";
+
 const LIB = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
-let loaded = null;
-const load = () => loaded ??= new Promise((ok, bad) => {
-  const s = document.createElement("script"); s.src = LIB; s.onload = ok; s.onerror = bad; document.head.append(s);
-});
 
 const wifiEsc = s => s.replace(/([\\;,:"])/g, "\\$1");
 
@@ -24,7 +22,7 @@ export default {
       <a id="q-dl" class="player-btn" download="cod-qr.png" hidden>Descarcă PNG</a></div>`;
     const $ = s => el.querySelector(s);
     let mode = "text";
-    await load();
+    await loadScript(LIB);
     const draw = () => {
       const text = mode === "text" ? $("#q-in").value.trim()
         : ($("#q-ssid").value ? `WIFI:T:WPA;S:${wifiEsc($("#q-ssid").value)};P:${wifiEsc($("#q-pass").value)};;` : "");
