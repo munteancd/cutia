@@ -1,0 +1,13 @@
+[Unit]
+Description=Cutia — pagina de start personală
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/cutia
+ExecStart=%h/cutia/.venv/bin/uvicorn cutia.app:app --app-dir backend --host 0.0.0.0 --port 3050 --proxy-headers
+Restart=always
+RestartSec=5
+Nice=10
+
+[Install]
+WantedBy=default.target
