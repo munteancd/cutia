@@ -1,0 +1,6 @@
+- name: Locul Unu
+  client: ''
+  token: _LOCUL1
+- name: Județ cu Județ
+  client: _JCJ
+  token: _JCJ
