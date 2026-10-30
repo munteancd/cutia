@@ -35,6 +35,6 @@ async def fetch(s: Settings) -> dict:
             try:
                 d = await _summary(c, host, s.get("PIHOLE_PASSWORD") or "")
                 return {"up": True, "blocked_pct": round(d["queries"]["percent_blocked"], 1)}
-            except httpx.HTTPError as e:
+            except (httpx.HTTPError, ValueError, KeyError) as e:  # alt aparat pe IP-ul ăla
                 last = e
     raise RuntimeError(f"Pi-hole nu răspunde: {last}")

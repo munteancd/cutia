@@ -6,6 +6,7 @@ Conexiune refuzată = oprită; niciun progres în fereastră = liberă.
 import asyncio
 import json
 import secrets
+import threading
 import time
 
 import paho.mqtt.client as mqtt
@@ -15,16 +16,26 @@ from ..settings import Settings
 WAIT_S = 3.0
 
 
+def _has_status(m: dict) -> bool:
+    res = m.get("result") or (m.get("Data") or {}).get("Data") or {}
+    return isinstance(res, dict) and "machine_status" in res
+
+
 def _collect(host: str, port: int, sn: str, code: str, wait: float = WAIT_S) -> list[dict]:
     msgs: list[dict] = []
+    got = threading.Event()  # ne oprim imediat ce vine starea mașinii
     c = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=f"cutia-{secrets.token_hex(3)}")
+    c.connect_timeout = 1.5  # imprimanta stinsă dar încă în ARP: altfel connect() atârnă 5-8 s
     c.username_pw_set("elegoo", code)
 
     def on_message(_c, _u, m):
         try:
-            msgs.append(json.loads(m.payload))
+            msg = json.loads(m.payload)
         except ValueError:
-            pass
+            return
+        msgs.append(msg)
+        if _has_status(msg):
+            got.set()
 
     c.on_message = on_message
     c.connect(host, port, keepalive=10)
@@ -36,7 +47,7 @@ def _collect(host: str, port: int, sn: str, code: str, wait: float = WAIT_S) -> 
     c.loop_start()
     try:
         c.publish(f"elegoo/{sn}/cutia/api_request", json.dumps(req))
-        time.sleep(wait)
+        got.wait(wait)
     finally:
         c.loop_stop()
         c.disconnect()

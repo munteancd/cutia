@@ -51,3 +51,12 @@ async def test_karakeep_skips_non_link(s):
         bm("n", None, kind="text"), bm("ok", "https://ok.ro")], "nextCursor": None})
     out = await karakeep.fetch(s)
     assert [i["title"] for i in out[0]["items"]] == ["ok"]
+
+
+@respx.mock
+async def test_karakeep_skips_non_web_urls(s):
+    respx.get(f"{BASE}/lists").respond(json={"lists": [{"id": "a", "name": "L", "icon": "x"}]})
+    respx.get(f"{BASE}/lists/a/bookmarks").respond(json={"bookmarks": [
+        bm("rău", "javascript:alert(1)"), bm("stricat", "nu e url"), bm("ok", "https://ok.ro")], "nextCursor": None})
+    out = await karakeep.fetch(s)
+    assert [i["title"] for i in out[0]["items"]] == ["ok"]

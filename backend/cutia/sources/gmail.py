@@ -6,7 +6,7 @@ from ..settings import Settings
 
 
 def _count(user: str, password: str) -> int:
-    m = imaplib.IMAP4_SSL("imap.gmail.com")
+    m = imaplib.IMAP4_SSL("imap.gmail.com", timeout=4)
     try:
         m.login(user, password)
         m.select("INBOX", readonly=True)

@@ -89,3 +89,48 @@ async def test_otto_up_when_service_and_bridge_ok(s, monkeypatch):
     monkeypatch.setattr(otto, "_service_state", active)
     respx.get("http://127.0.0.1:3110/health").respond(json={"ok": True})
     assert (await otto.fetch(s))["up"] is True
+
+
+class FakeMqtt:
+    """Client MQTT fals: răspunde imediat cu progresul, ca imprimanta reală."""
+    last = None
+
+    def __init__(self, *a, **k):
+        FakeMqtt.last = self
+        self.connect_timeout = None
+
+    def username_pw_set(self, *a): pass
+    def connect(self, *a, **k): pass
+    def subscribe(self, *a): pass
+    def loop_stop(self): pass
+    def disconnect(self): pass
+
+    def loop_start(self):
+        import json as _j
+        msg = type("M", (), {"payload": _j.dumps({"result": {"machine_status": {"progress": 42}}}).encode()})
+        self.on_message(self, None, msg)
+
+    def publish(self, *a): pass
+
+
+def test_printer_returns_early_when_status_arrives(monkeypatch):
+    import time as _t
+    monkeypatch.setattr(printer.mqtt, "Client", FakeMqtt)
+    t = _t.monotonic()
+    msgs = printer._collect("h", 1883, "SN", "code")
+    assert _t.monotonic() - t < 1
+    assert printer._progress(msgs) == 42
+
+
+def test_printer_connect_timeout_is_short(monkeypatch):
+    monkeypatch.setattr(printer.mqtt, "Client", FakeMqtt)
+    printer._collect("h", 1883, "SN", "code")
+    assert FakeMqtt.last.connect_timeout is not None and FakeMqtt.last.connect_timeout <= 1.5
+
+
+@respx.mock
+async def test_pihole_falls_back_when_first_host_is_not_pihole(s):
+    respx.post("http://192.168.0.192/api/auth").respond(text="<html>alt aparat</html>")
+    respx.post("http://192.168.0.193/api/auth").respond(json={"session": {"sid": "abc", "valid": True}})
+    respx.get("http://192.168.0.193/api/stats/summary").respond(json={"queries": {"percent_blocked": 5.0}})
+    assert (await pihole.fetch(s))["up"] is True

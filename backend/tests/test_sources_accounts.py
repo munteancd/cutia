@@ -29,7 +29,7 @@ def s(tmp_path):
 class FakeImap:
     queries: list = []
 
-    def __init__(self, host):
+    def __init__(self, host, timeout=None):
         self.host = host
 
     def login(self, u, p):
@@ -80,3 +80,14 @@ async def test_phone_battery_from_ha(s):
     respx.get("http://ha:8123/api/states/sensor.a52s_battery_level").respond(json={"state": "87"})
     respx.get("http://ha:8123/api/states/sensor.a52s_battery_state").respond(json={"state": "Charging"})
     assert await phone.fetch(s) == {"battery": 87, "charging": True}
+
+
+def test_gmail_imap_has_timeout(s, monkeypatch):
+    seen = {}
+
+    class Imap(FakeImap):
+        def __init__(self, host, timeout=None):
+            seen["timeout"] = timeout
+    monkeypatch.setattr(gmail.imaplib, "IMAP4_SSL", Imap)
+    gmail._count("u", "p")
+    assert seen["timeout"] and seen["timeout"] <= 5

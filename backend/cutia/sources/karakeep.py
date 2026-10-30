@@ -1,4 +1,6 @@
 """Bookmark-urile din Karakeep, pe listele (Smart Lists) de acolo."""
+from urllib.parse import urlparse
+
 import httpx
 
 from ..settings import Settings
@@ -13,8 +15,9 @@ async def _items(c: httpx.AsyncClient, list_id: str) -> list[dict]:
         d = r.json()
         for b in d["bookmarks"]:
             ct = b.get("content") or {}
-            if ct.get("type") != "link" or not ct.get("url"):
-                continue
+            url = urlparse(ct.get("url") or "") if ct.get("type") == "link" else None
+            if not url or url.scheme not in ("http", "https") or not url.netloc:
+                continue  # fără javascript:, fără link-uri stricate care ar bloca pagina
             items.append({"title": b.get("title") or ct.get("title") or ct["url"],
                           "url": ct["url"], "favicon": ct.get("favicon")})
         cursor = d.get("nextCursor")
