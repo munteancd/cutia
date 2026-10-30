@@ -197,3 +197,13 @@ button { font: inherit; color: inherit; }
 .thumb-bar { display: flex; align-items: center; gap: 4px; padding: 6px; }
 .thumb-bar span { flex: 1; color: var(--muted); font-size: 13px; padding-left: 4px; }
 .thumb-bar button { background: var(--panel-2); border: 0; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; }
+.thumb.on { outline: 2px solid var(--accent); }
+.tool-form input[type=range] { width: 260px; accent-color: var(--accent); }
+.crop-ed { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.crop-stage { position: relative; overflow: hidden; user-select: none; }
+.crop-stage img { display: block; max-width: 100%; max-height: 60vh; }
+.crop-box { position: absolute; border: 2px dashed #fff; box-shadow: 0 0 0 9999px rgba(0,0,0,.55); cursor: move; touch-action: none; }
+.crop-box .rs { position: absolute; right: -7px; bottom: -7px; width: 14px; height: 14px; background: var(--accent); border-radius: 3px; cursor: nwse-resize; }
+.ocr-out { width: 100%; min-height: 260px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 12px; }
+.drop { border: 2px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); width: 100%; text-align: center; }
+.drop.over { border-color: var(--accent); color: var(--text); }

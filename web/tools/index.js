@@ -3,7 +3,9 @@
 import semnatura from "./semnatura.js";
 import pozepdf from "./pozepdf.js";
 import micsoreaza from "./micsoreaza.js";
+import poze from "./poze.js";
+import ocr from "./ocr.js";
 import qr from "./qr.js";
 import unitati from "./unitati.js";
 
-export const TOOLS = [semnatura, pozepdf, micsoreaza, qr, unitati];
+export const TOOLS = [semnatura, pozepdf, micsoreaza, poze, ocr, qr, unitati];

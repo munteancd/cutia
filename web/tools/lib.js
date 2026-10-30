@@ -39,3 +39,24 @@ export const size = b => b < 1024 * 1024 ? `${Math.round(b / 1024)} KB` : `${(b 
 
 // „file.pdf" → „file-semnat.pdf"
 export const renamed = (name, suffix, ext) => name.replace(/\.[^.]+$/, "") + suffix + (ext ?? (name.match(/\.[^.]+$/)?.[0] || ""));
+
+// pozele de pe iPhone (HEIC) nu le deschide browserul: le facem JPG întâi
+const isHeic = f => /image\/hei[cf]/.test(f.type) || /\.hei[cf]$/i.test(f.name);
+export async function openableImage(file) {
+  if (!isHeic(file)) return file;
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js");
+  const out = await window.heic2any({ blob: file, toType: "image/jpeg", quality: 0.92 });
+  return new File([Array.isArray(out) ? out[0] : out], renamed(file.name, "", ".jpg"), { type: "image/jpeg" });
+}
+export const IMAGE_ACCEPT = "image/*,.heic,.heif";
+
+export async function zip(files) { // [{ name, blob }] → Blob .zip
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  const z = new window.JSZip(), used = new Set();
+  for (const f of files) {
+    let n = f.name, k = 1;
+    while (used.has(n)) n = renamed(f.name, `-${++k}`);
+    used.add(n); z.file(n, f.blob);
+  }
+  return z.generateAsync({ type: "blob" });
+}

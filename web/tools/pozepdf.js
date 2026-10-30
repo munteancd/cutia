@@ -1,5 +1,5 @@
 // Poze în PDF: pozele în ordinea aleasă, câte una pe o pagină A4 (culcată dacă poza e lată).
-import { pdflib, loadImage, canvasBlob, download } from "./lib.js";
+import { pdflib, loadImage, canvasBlob, download, openableImage, IMAGE_ACCEPT } from "./lib.js";
 
 const A4 = [595.28, 841.89]; // puncte
 const MARGIN = 28;           // ~1 cm
@@ -12,7 +12,7 @@ export default {
   description: "Mai multe poze → un PDF, câte una pe pagină",
   mount(el) {
     el.innerHTML = `<div class="tool-form">
-      <label class="player-btn">Adaugă poze<input id="p-in" type="file" accept="image/*" multiple hidden></label>
+      <label class="player-btn">Adaugă poze<input id="p-in" type="file" accept="${IMAGE_ACCEPT}" multiple hidden></label>
       <label class="sub"><input id="p-margin" type="checkbox" checked> cu margine albă</label>
       <div id="p-note" class="sub">Pozele apar mai jos; le poți muta, roti sau scoate înainte să faci PDF-ul.</div>
       <button id="p-dl" type="button" class="player-btn" hidden>Fă PDF-ul</button>
@@ -31,9 +31,15 @@ export default {
       $("#p-dl").hidden = !list.length;
       $("#p-note").textContent = list.length ? `${list.length} ${list.length === 1 ? "poză" : "poze"}.` : "Adaugă una sau mai multe poze.";
     };
-    $("#p-in").addEventListener("change", e => {
-      list.push(...[...e.target.files].map(f => ({ url: URL.createObjectURL(f), rot: 0 })));
-      e.target.value = ""; draw();
+    $("#p-in").addEventListener("change", async e => {
+      const files = [...e.target.files];
+      e.target.value = "";
+      $("#p-note").textContent = "Se încarcă pozele…";
+      for (const f of files) {
+        try { list.push({ url: URL.createObjectURL(await openableImage(f)), rot: 0 }); }
+        catch { $("#p-note").textContent = `${f.name} nu se poate deschide.`; }
+      }
+      draw();
     });
     $("#p-list").addEventListener("click", e => {
       const b = e.target.closest("[data-a]");
