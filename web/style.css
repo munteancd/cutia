@@ -44,7 +44,7 @@ button { font: inherit; color: inherit; }
 .view h1 { font-size: 20px; margin: 0 0 16px; font-weight: 600; }
 
 /* căsuțe */
-.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); max-width: 920px; margin: 0 auto; }
+.grid { display: grid; grid-auto-flow: dense; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); max-width: 920px; margin: 0 auto; }
 .tile {
   background: var(--panel); border-radius: var(--radius); padding: 14px;
   min-height: 82px; display: flex; flex-direction: column; justify-content: space-between;
