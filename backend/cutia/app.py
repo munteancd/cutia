@@ -2,12 +2,12 @@ import asyncio
 
 import httpx
 from fastapi import Body, FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import diacritics, football, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import camera, diacritics, football, notes, server, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -22,7 +22,9 @@ HOME_SOURCES = {
     "phone": (phone.fetch, 5 * 60),
     "youtube": (youtube.fetch, 60 * 60),
     "modal": (modal_credit.fetch, 60 * 60),
+    "server": (server.fetch, 60),
 }
+SPEAK = "/home/cristi/casa/anunta.sh"  # puntea Vocii casei spre boxa Nest
 
 
 @app.get("/api/health")
@@ -111,6 +113,63 @@ async def diacritice(text: str = Body(..., embed=True, max_length=20000)) -> dic
         return {"text": await diacritics.restore(settings, text)}
     except (httpx.HTTPError, KeyError, IndexError, ValueError) as e:
         raise HTTPException(502, f"Gemini n-a putut pune diacriticele ({type(e).__name__})")
+
+
+
+@app.get("/api/notes")
+async def notes_list() -> list:
+    return notes.all_notes(settings)
+
+
+@app.put("/api/notes/{note_id}")
+async def note_save(note_id: str, title: str = Body("", max_length=200),
+                    body: str = Body("", max_length=200_000)) -> dict:
+    try:
+        return notes.save(settings, note_id, title, body)
+    except ValueError:
+        raise HTTPException(400, "id greșit")
+
+
+@app.delete("/api/notes/{note_id}")
+async def note_delete(note_id: str) -> dict:
+    notes.delete(settings, note_id)
+    return {"ok": True}
+
+
+@app.get("/api/clip")
+async def clip_get() -> dict:
+    return notes.get_clip(settings)
+
+
+@app.put("/api/clip")
+async def clip_set(text: str = Body("", embed=True, max_length=200_000)) -> dict:
+    return notes.set_clip(settings, text)
+
+
+@app.get("/api/printer/snapshot")
+async def printer_snapshot() -> Response:
+    try:
+        jpg = await camera.snapshot(settings)
+    except httpx.HTTPError:
+        jpg = None
+    if not jpg:
+        raise HTTPException(502, "camera nu răspunde")
+    return Response(jpg, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+
+
+async def _speak(text: str) -> str:
+    p = await asyncio.create_subprocess_exec(settings.get("SPEAK_SCRIPT") or SPEAK, text,
+                                             stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.STDOUT)
+    out, _ = await asyncio.wait_for(p.communicate(), 90)
+    return out.decode(errors="replace").strip().splitlines()[-1] if out.strip() else "Gata."
+
+
+@app.post("/api/speak")
+async def speak(text: str = Body(..., embed=True, min_length=1, max_length=500)) -> dict:
+    try:
+        return {"message": await _speak(text)}
+    except (OSError, asyncio.TimeoutError):
+        raise HTTPException(502, "boxa nu răspunde")
 
 
 app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")

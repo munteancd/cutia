@@ -219,3 +219,36 @@ button { font: inherit; color: inherit; }
 .clock { font-size: 56px; font-weight: 650; font-variant-numeric: tabular-nums; width: 100%; line-height: 1.1; }
 .clock.ring { color: var(--warn); animation: blink 1s steps(2) infinite; }
 @keyframes blink { 50% { opacity: .35; } }
+
+/* acasă: căutare, boxă, cameră, server */
+.searchbar { max-width: 920px; margin: 0 auto 14px; }
+.searchbar .search { max-width: none; margin: 0; font-size: 16px; padding: 12px 16px; }
+.speak { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; max-width: 920px; margin: 16px auto 0; }
+.speak .search { flex: 1; min-width: 200px; max-width: none; margin: 0; }
+.speak .sub { width: 100%; }
+.printer-row { display: flex; gap: 12px; align-items: center; }
+.printer-row .cam { width: 150px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; background: #000; }
+.tile .sub { font-size: 13px; }
+
+/* notițe */
+.clip { background: var(--panel); border-radius: var(--radius); padding: 12px 14px; max-width: 1000px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 8px; }
+.clip .label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.clip textarea { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; color: var(--text); font: inherit; padding: 8px 10px; resize: vertical; }
+.clip .tabs { margin: 0; align-items: center; }
+.notes { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; max-width: 1000px; }
+.note-list { display: flex; flex-direction: column; gap: 6px; }
+.note-list .player-btn { margin-bottom: 6px; }
+#n-list { display: flex; flex-direction: column; gap: 4px; }
+.note-item { background: var(--panel); border: 0; border-radius: 8px; padding: 9px 12px; text-align: left; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+.note-item b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.note-item.on { background: var(--accent); color: #fff; }
+.note-item.on .sub { color: #dde5ff; }
+.note-ed { display: flex; flex-direction: column; gap: 10px; }
+.note-ed .search { max-width: none; margin: 0; font-weight: 600; }
+.note-ed .ocr-out { min-height: 340px; }
+.note-view { background: var(--panel); border-radius: 10px; padding: 12px 14px; min-height: 340px; cursor: text; white-space: pre-wrap; }
+.note-view .check { display: flex; gap: 8px; align-items: center; cursor: pointer; padding: 2px 0; }
+.note-view .check input { width: 17px; height: 17px; accent-color: var(--accent); }
+.note-view .check.done { color: var(--muted); text-decoration: line-through; }
+.note-ed .tabs { justify-content: space-between; align-items: center; }
+@media (max-width: 700px) { .notes { grid-template-columns: 1fr; } .printer-row .cam { width: 110px; } }

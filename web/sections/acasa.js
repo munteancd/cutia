@@ -14,22 +14,31 @@ function dot(state) { return `<span class="dot ${state}"></span>`; }
 
 function render(d) {
   const w = d.weather.value, g = d.gmail.value, o = d.otto.value, p = d.pihole.value,
-        pr = d.printer.value, ph = d.phone.value, yt = d.youtube.value, m = d.modal.value;
+        pr = d.printer.value, ph = d.phone.value, yt = d.youtube.value, m = d.modal.value, sv = d.server?.value;
   const left = m => m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m} min`;
-  const printer = !pr ? "" : pr.state === "printing" || pr.state === "paused"
-    ? `<div>${dot("warn")}<span class="big warn-text">${pr.progress}%</span></div>
-       <div class="sub">${pr.state === "paused" ? "pe pauză" : pr.remaining_min != null ? `mai are ${left(pr.remaining_min)}` : "printează"}</div>`
+  const busy = pr && (pr.state === "printing" || pr.state === "paused");
+  // cât printează, căsuța e lată și are poza din cameră (reîncărcată la fiecare load)
+  const printer = !pr ? "" : busy
+    ? `<div class="printer-row"><img class="cam" src="/api/printer/snapshot?t=${Date.now()}" alt="" onerror="this.remove()">
+       <div><div>${dot("warn")}<span class="big warn-text">${pr.progress}%</span></div>
+       <div class="sub">${pr.state === "paused" ? "pe pauză" : pr.remaining_min != null ? `mai are ${left(pr.remaining_min)}` : "printează"}</div></div></div>`
     : `<div>${dot(pr.state === "off" ? "" : "ok")}${pr.state === "off" ? "oprită" : "liberă"}</div>`;
+  const backupsOk = sv && sv.backups.every(b => b.ok);
+  const server = !sv ? "" : `
+    <div>${dot(sv.disk.used_pct > 90 ? "bad" : "ok")}disc ${sv.disk.used_pct}% <span class="sub">· ${sv.disk.free_gb} GB liberi</span></div>
+    <div title="${esc(sv.backups.map(b => `${b.name}: ${b.when}`).join(" · "))}">${dot(backupsOk ? "ok" : "bad")}backup ${backupsOk ? "ok" : sv.backups.filter(b => !b.ok).map(b => esc(b.name)).join(", ") + " a dat greș"}</div>
+    ${sv.net ? `<div>${dot(!sv.net.up ? "bad" : sv.net.drops_today ? "warn" : "ok")}net: ${!sv.net.up ? "căzut" : sv.net.drops_today ? `${sv.net.drops_today} ${sv.net.drops_today === 1 ? "cădere" : "căderi"} azi` : "fără căderi azi"}</div>` : ""}`;
   return [
     tile("Ora", `<div class="big" id="clock"></div><div class="sub" id="date"></div>`),
     tile("Moșnița", w ? `<div class="big">${Math.round(w.temp)}°</div><div class="sub">${esc(w.desc)} · ${Math.round(w.min)}°/${Math.round(w.max)}°</div>` : "", d.weather),
     tile("Gmail", g ? `<div class="big">${g.unread}</div><div class="sub">necitite</div>` : "", d.gmail),
     tile("Otto", o ? `<div>${dot(o.up ? "ok" : "bad")}${o.up ? "merge" : esc(o.detail)}</div>` : "", d.otto),
     tile("Pi-hole", p ? `<div>${dot("ok")}${p.blocked_pct}% blocat</div>` : "", d.pihole),
-    tile("Imprimanta", printer, d.printer),
+    tile("Imprimanta", printer, d.printer, busy ? "wide" : ""),
     tile("Telefon", ph ? `<div class="big">${ph.battery}%</div><div class="sub">${ph.charging ? "se încarcă" : "baterie"}</div>` : "", d.phone),
     tile("YouTube", yt ? yt.channels.map(c => `<div><b>${fmt(c.subs)}</b> <span class="sub">${esc(c.name)}</span></div>`).join("") : "", d.youtube),
     tile("Modal", m ? `<div class="big">$${m.left.toFixed(2)}</div><div class="sub">rămași din $${m.credit}</div>` : "", d.modal),
+    tile("Server2", server, d.server),
   ].join("");
 }
 
@@ -51,19 +60,53 @@ function tick() {
   document.getElementById("date").textContent = `${ZILE[n.getDay()]}, ${n.getDate()} ${LUNI[n.getMonth()]}`;
 }
 
+// „y ceva" = YouTube, „k ceva" = Karakeep, altfel Google
+const SEARCH = {
+  y: q => `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`,
+  k: q => `http://192.168.0.106:3010/dashboard/search?q=${encodeURIComponent(q)}`,
+  "": q => `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+};
+function search(e) {
+  e.preventDefault();
+  const v = e.target.q.value.trim(), m = v.match(/^([yk]) (.+)/);
+  if (!v) return;
+  window.open(m ? SEARCH[m[1]](m[2]) : SEARCH[""](v), "_blank", "noopener");
+  e.target.q.value = "";
+}
+
+async function speak(e) {
+  e.preventDefault();
+  const f = e.target, text = f.text.value.trim(), note = f.querySelector(".sub");
+  if (!text) return;
+  note.textContent = "Se pregătește vocea…"; f.querySelector("button").disabled = true;
+  try {
+    const r = await fetch("/api/speak", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
+    note.textContent = r.ok ? (await r.json()).message : "Boxa nu răspunde acum.";
+    if (r.ok) f.text.value = "";
+  } catch { note.textContent = "Serverul nu răspunde."; }
+  f.querySelector("button").disabled = false;
+}
+
 let timers = [];
 registerSection("acasa", "Acasă", "🏠", async el => {
   timers.forEach(clearInterval);
-  el.innerHTML = `<div class="grid" id="tiles"></div><div class="shortcuts" id="shortcuts"></div>`;
+  el.innerHTML = `<form class="searchbar" id="search"><input name="q" class="search" placeholder="Caută pe Google… (y = YouTube, k = Karakeep)" autocomplete="off"></form>
+    <div class="grid" id="tiles"></div><div class="shortcuts" id="shortcuts"></div>
+    <form class="speak" id="speak"><input name="text" class="search" placeholder="Spune ceva pe boxa din casă…" maxlength="500" autocomplete="off">
+      <button type="submit" class="player-btn">🔊 Spune</button><div class="sub"></div></form>`;
+  el.querySelector("#search").addEventListener("submit", search);
+  el.querySelector("#speak").addEventListener("submit", speak);
+  if (matchMedia("(pointer: fine)").matches) el.querySelector("#search input").focus();
   async function load() {
     if (!isShown("acasa")) return;
     try {
       const d = await api("/api/home");
+      if (!isShown("acasa")) return; // ai plecat pe altă categorie cât se încărca
       document.getElementById("tiles").innerHTML = render(d);
       document.getElementById("shortcuts").innerHTML = shortcuts(d.shortcuts || []);
       tick();
     } catch (e) {
-      document.getElementById("tiles").innerHTML = `<div class="tile off"><div class="label">Server</div><div>nu răspunde</div></div>`;
+      if (isShown("acasa")) document.getElementById("tiles").innerHTML = `<div class="tile off"><div class="label">Server</div><div>nu răspunde</div></div>`;
     }
   }
   await load();
