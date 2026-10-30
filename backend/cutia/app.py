@@ -1,13 +1,13 @@
 import asyncio
 
 import httpx
-from fastapi import FastAPI, HTTPException
+from fastapi import Body, FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import football, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import diacritics, football, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -102,6 +102,15 @@ async def print3d() -> list:
 @app.get("/api/tv")
 async def tv() -> dict:
     return await cached("tv", 24 * 60 * 60, lambda: iptv.fetch(settings), timeout=30)
+
+
+
+@app.post("/api/diacritice")
+async def diacritice(text: str = Body(..., embed=True, max_length=20000)) -> dict:
+    try:
+        return {"text": await diacritics.restore(settings, text)}
+    except (httpx.HTTPError, KeyError, IndexError, ValueError) as e:
+        raise HTTPException(502, f"Gemini n-a putut pune diacriticele ({type(e).__name__})")
 
 
 app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")

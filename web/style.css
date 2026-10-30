@@ -207,3 +207,15 @@ button { font: inherit; color: inherit; }
 .ocr-out { width: 100%; min-height: 260px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; color: var(--text); font: inherit; padding: 12px; }
 .drop { border: 2px dashed var(--line); border-radius: 12px; padding: 18px; color: var(--muted); width: 100%; text-align: center; }
 .drop.over { border-color: var(--accent); color: var(--text); }
+.tool-form .tbl { max-width: 460px; }
+.tool-form .tbl td:last-child { text-align: right; white-space: nowrap; }
+.tool-form h2 { width: 100%; margin: 10px 0 0; }
+.tool-form input.date, .tool-form input.mini, .pct-row input { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; color: var(--text); font: inherit; }
+.tool-form input.mini { width: 70px; }
+.tool-form input[type=number] { width: 140px; }
+.pct-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; width: 100%; }
+.pct-row input { width: 110px; }
+.pct-row b { font-size: 20px; }
+.clock { font-size: 56px; font-weight: 650; font-variant-numeric: tabular-nums; width: 100%; line-height: 1.1; }
+.clock.ring { color: var(--warn); animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .35; } }

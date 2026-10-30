@@ -5,7 +5,13 @@ import pozepdf from "./pozepdf.js";
 import micsoreaza from "./micsoreaza.js";
 import poze from "./poze.js";
 import ocr from "./ocr.js";
+import diacritice from "./diacritice.js";
+import salariu from "./salariu.js";
+import tva from "./tva.js";
+import zile from "./zile.js";
+import procente from "./procente.js";
+import timer from "./timer.js";
 import qr from "./qr.js";
 import unitati from "./unitati.js";
 
-export const TOOLS = [semnatura, pozepdf, micsoreaza, poze, ocr, qr, unitati];
+export const TOOLS = [semnatura, pozepdf, micsoreaza, poze, ocr, diacritice, salariu, tva, zile, procente, timer, qr, unitati];
