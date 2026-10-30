@@ -1,10 +1,53 @@
-# Cardurile din 3D Print. Poza (web/img/print3d/) arată rezultatul real, nu poza
-# de pe site. Adaugă: - {name: ..., url: ..., image: ....webp, description: ...}
-- name: SkipTheCAD
+# Cardurile din 3D Print, pe grupuri. Card cu poză (web/img/print3d/) când
+# vrem să arătăm rezultatul real; altfel o iconiță.
+# Adaugă: - {group: ..., name: ..., url: ..., image: ....webp SAU icon: 🧩, description: ...}
+- group: Site-uri
+  name: SkipTheCAD
   url: "https://skipthecad.com/"
   image: skipthecad.webp
   description: "Director cu sute de generatoare: formular, poză sau text → STL/3MF, fără CAD."
-- name: ilove3d
+- group: Site-uri
+  name: ilove3d
   url: "https://ilove3d.app/en"
   image: ilove3d.webp
   description: "Unelte 3D în browser pentru modele de printat."
+
+# --- ilove3d: generatoare (totul rulează în browser, nimic nu se urcă) ---
+- {group: "ilove3d · Generatoare", icon: "🏷️", name: Breloc cu nume, url: "https://ilove3d.app/en/tools/keychain", description: "Nume, font, inel și plăcuță → STL."}
+- {group: "ilove3d · Generatoare", icon: "🔤", name: Text 3D, url: "https://ilove3d.app/en/tools/text-to-3d", description: "Semne, nume, topper de tort; 9 fonturi, bază și inel."}
+- {group: "ilove3d · Generatoare", icon: "🔳", name: Cod QR 3D, url: "https://ilove3d.app/en/tools/qr-to-3d", description: "Link → plăcuță QR în relief, opțional breloc."}
+- {group: "ilove3d · Generatoare", icon: "🧳", name: Etichetă de bagaj, url: "https://ilove3d.app/en/tools/luggage-tag", description: "Nume și contact, în relief sau gravate."}
+- {group: "ilove3d · Generatoare", icon: "📦", name: Cutie cu capac, url: "https://ilove3d.app/en/tools/box-maker", description: "Dimensiuni interioare, despărțitoare, joc la capac."}
+- {group: "ilove3d · Generatoare", icon: "🗃️", name: Gridfinity, url: "https://ilove3d.app/en/tools/gridfinity", description: "Cutiuțe Gridfinity: unități, înălțime, etichetă, magneți."}
+- {group: "ilove3d · Generatoare", icon: "🍪", name: Formă de prăjituri, url: "https://ilove3d.app/en/tools/cookie-cutter", description: "Nume, dată sau SVG → formă, fără suporturi."}
+- {group: "ilove3d · Generatoare", icon: "🧩", name: Puzzle, url: "https://ilove3d.app/en/tools/puzzle-maker", description: "Piese care se îmbină, cu mărime și joc reglabile."}
+- {group: "ilove3d · Generatoare", icon: "🏺", name: Vază, url: "https://ilove3d.app/en/tools/vase-maker", description: "Formă, răsucire și model în relief (sau poza ta)."}
+- {group: "ilove3d · Generatoare", icon: "💡", name: Abajur, url: "https://ilove3d.app/en/tools/lampshade", description: "Abajur suspendat E27/E14, cu previzualizare aprinsă."}
+- {group: "ilove3d · Generatoare", icon: "🛋️", name: Veioză, url: "https://ilove3d.app/en/tools/table-lamp", description: "Veioză nordică cu bule, nervuri și răsucire."}
+- {group: "ilove3d · Generatoare", icon: "🌌", name: Harta cerului, url: "https://ilove3d.app/en/tools/star-map", description: "Cerul unei date, ore și locuri, pe plăcuță."}
+- {group: "ilove3d · Generatoare", icon: "🎵", name: Undă sonoră, url: "https://ilove3d.app/en/tools/sound-wave", description: "Mesaj vocal sau melodie → plăcuță cu forma undei."}
+- {group: "ilove3d · Generatoare", icon: "🖼️", name: Litofanie, url: "https://ilove3d.app/en/tools/lithophane", description: "Poză → litofanie, cu ramă și formă curbată."}
+- {group: "ilove3d · Generatoare", icon: "🔖", name: Semn de carte din poză, url: "https://ilove3d.app/en/tools/photo-bookmark", description: "Imagine → semn de carte multicolor (3MF)."}
+- {group: "ilove3d · Generatoare", icon: "🏞️", name: Poză în STL, url: "https://ilove3d.app/en/tools/image-to-stl", description: "PNG/JPG → relief după luminozitate sau logo extrudat."}
+- {group: "ilove3d · Generatoare", icon: "✒️", name: SVG în 3D, url: "https://ilove3d.app/en/tools/svg-to-3d", description: "Logo, ștampilă sau șablon din SVG → STL."}
+- {group: "ilove3d · Generatoare", icon: "🚿", name: Adaptor de furtun, url: "https://ilove3d.app/en/tools/hose-adapter", description: "Drept sau cot până la 135°, diametre la alegere."}
+- {group: "ilove3d · Generatoare", icon: "🖼️", name: Tablou 3D (GLB), url: "https://ilove3d.app/en/tools/image-to-glb", description: "Poză înrămată 3D, pentru galerii virtuale."}
+
+# --- ilove3d: lucru cu modele ---
+- {group: "ilove3d · Lucru cu modele", icon: "👁️", name: Vizualizator 3D, url: "https://ilove3d.app/en/tools/3d-viewer", description: "Deschide STL, OBJ, GLB, 3MF; măsurători și captură."}
+- {group: "ilove3d · Lucru cu modele", icon: "📐", name: Info model și cost, url: "https://ilove3d.app/en/tools/model-info", description: "Volum, suprafață, dimensiuni și cât costă printul."}
+- {group: "ilove3d · Lucru cu modele", icon: "🔁", name: Conversie formate, url: "https://ilove3d.app/en/tools/convert", description: "STL, OBJ, PLY, GLB, 3MF, STEP — unul sau mai multe."}
+- {group: "ilove3d · Lucru cu modele", icon: "🩹", name: Reparare model, url: "https://ilove3d.app/en/tools/repair-mesh", description: "Găuri, fețe întoarse, dubluri — înainte de print."}
+- {group: "ilove3d · Lucru cu modele", icon: "📏", name: Scalare și rotire, url: "https://ilove3d.app/en/tools/transform", description: "Dimensiuni exacte în mm, oglindire, pus pe masă."}
+- {group: "ilove3d · Lucru cu modele", icon: "✂️", name: Tăiere model, url: "https://ilove3d.app/en/tools/cut-model", description: "Taie modelul în bucăți închise, gata de print."}
+- {group: "ilove3d · Lucru cu modele", icon: "🧱", name: Separare piese, url: "https://ilove3d.app/en/tools/separate-parts", description: "Găsește piesele nelegate și le descarcă separat."}
+- {group: "ilove3d · Lucru cu modele", icon: "🗺️", name: Aranjare pe masă, url: "https://ilove3d.app/en/tools/bed-packer", description: "Mai multe modele pe aceeași masă de print → 3MF."}
+- {group: "ilove3d · Lucru cu modele", icon: "🧰", name: Editor 3D, url: "https://ilove3d.app/en/tools/3d-editor", description: "Combină modele, ajustează fiecare obiect, exportă."}
+- {group: "ilove3d · Lucru cu modele", icon: "⚙️", name: Totul dintr-o trecere, url: "https://ilove3d.app/en/tools/pipeline", description: "Reparare + simplificare + scalare + conversie."}
+- {group: "ilove3d · Lucru cu modele", icon: "🔻", name: Mai puține poligoane, url: "https://ilove3d.app/en/tools/reduce-polygons", description: "Model prea greu → mai ușor, aceeași formă."}
+- {group: "ilove3d · Lucru cu modele", icon: "🎨", name: Mai puține culori (3MF), url: "https://ilove3d.app/en/tools/reduce-colors", description: "Reduce paleta unui 3MF și alege culorile."}
+- {group: "ilove3d · Lucru cu modele", icon: "🎬", name: Video 360°, url: "https://ilove3d.app/en/tools/turntable", description: "Modelul tău rotindu-se, ca MP4."}
+- {group: "ilove3d · Lucru cu modele", icon: "🗜️", name: Comprimare GLB, url: "https://ilove3d.app/en/tools/compress-glb", description: "GLB mai mic pentru web și AR."}
+- {group: "ilove3d · Lucru cu modele", icon: "💧", name: Filigran GLB, url: "https://ilove3d.app/en/tools/watermark-3d", description: "Semnul tău pe texturile unui GLB."}
+- {group: "ilove3d · Lucru cu modele", icon: "🦷", name: Scanări dentare, url: "https://ilove3d.app/en/tools/dental-viewer", description: "Deschide scanări intraorale STL/PLY."}
+- {group: "ilove3d · Lucru cu modele", icon: "🩻", name: Vizualizator DICOM, url: "https://ilove3d.app/en/tools/dicom-viewer", description: "Tomografii CT/CBCT: secțiuni și 3D."}
