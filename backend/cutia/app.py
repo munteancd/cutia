@@ -1,11 +1,11 @@
 import asyncio
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import gmail, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import football, gmail, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -42,6 +42,26 @@ async def home() -> dict:
 @app.get("/api/bookmarks")
 async def bookmarks() -> dict:
     return await cached("bookmarks", 10 * 60, lambda: karakeep.fetch(settings), timeout=15)
+
+
+@app.get("/api/football")
+async def leagues() -> list:
+    return settings.config("leagues")
+
+
+_live: set[int] = set()  # ligi cu un meci în desfășurare -> cache mai scurt
+
+
+@app.get("/api/football/{league_id}")
+async def league(league_id: int) -> dict:
+    if league_id not in {lg["id"] for lg in settings.config("leagues")}:
+        raise HTTPException(404, "ligă necunoscută")
+    ttl = 2 * 60 if league_id in _live else 10 * 60
+    env = await cached(f"football:{league_id}", ttl,
+                       lambda: football.fetch(settings, league_id), timeout=10)
+    if env["ok"]:
+        (_live.add if env["value"]["live"] else _live.discard)(league_id)
+    return env
 
 
 app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")
