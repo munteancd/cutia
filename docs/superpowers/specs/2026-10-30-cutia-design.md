@@ -63,8 +63,9 @@ bookmarks). Conținut:
 - **Abonați YouTube** la canalele lui: Locul Unu (`UCWNOrqkkIOx9SiY8B_kQUnQ`) și
   Județ cu Județ (ID de aflat). Număr public, YouTube Data API v3 cu cheie din `.env`
   de pe server2 (atenție: proiectul GCP are restricții — verifică întâi).
-- **Credit Modal** — „eventual": doar dacă Modal îl expune printr-o comandă/API. Dacă nu,
-  se scoate fără discuție.
+- **Credit Modal** — îl vrea (confirmat 2026-10-30). Se face dacă Modal îl expune printr-o
+  comandă/API; dacă e cu adevărat imposibil, se scoate și i se spune de ce.
+  (La fel bateria telefonului: o vrea, se scoate doar dacă nu există cale rezonabilă.)
 - **Rândul de scurtături** — site-urile folosite cel mai des (YouTube, Gmail, GitHub,
   Claude, … lista finală o dă el; ușor de editat).
 
@@ -86,8 +87,13 @@ Preferabil uneltele lucrează în browser (ca IT-Tools), ca să nu încarce serv
 (i3, ~7,7 GB RAM). IT-Tools (server2:3020) rămâne pe loc; nu se copiază.
 
 ### 4. 3D Print
-Scurtături: https://skipthecad.com/, https://ilove3d.app/en + ce mai adaugă. Același
-fel de listă editabilă ca la Unelte. (Eventual și link spre camera imprimantei — MJPEG
+Scurtături: https://skipthecad.com/, https://ilove3d.app/en + ce mai adaugă.
+**Generatoarele de pe SkipTheCAD** (director cu ~666 generatoare: formular/poză/text →
+STL/3MF) nu rulează în pagina lui — rămân linkuri, DAR fiecare apare ca **card cu poză
+proprie**, pentru că pozele de pe SkipTheCAD nu arată corect ce face fiecare (el,
+2026-10-30). Poza = captură făcută de noi cu rezultatul real al generatorului (ce
+piesă iese), + o descriere scurtă în română. **Nu le punem pe toate 666** — el alege
+care (pornim cu câteva, se adaugă pe parcurs); fiecare card = o intrare în config + o poză. (Eventual și link spre camera imprimantei — MJPEG
 la `http://192.168.0.239:8080/` — ca bonus, nu cerință.)
 
 ### 5. Sport
