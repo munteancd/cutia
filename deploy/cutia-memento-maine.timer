@@ -1,0 +1,10 @@
+[Unit]
+Description=Cutia — seara: ce ai mâine în calendar
+
+[Timer]
+OnCalendar=*-*-* 20:00:00
+Persistent=true
+Unit=cutia-memento@maine.service
+
+[Install]
+WantedBy=timers.target

@@ -14,7 +14,7 @@ function dot(state) { return `<span class="dot ${state}"></span>`; }
 
 function render(d) {
   const w = d.weather.value, g = d.gmail.value, o = d.otto.value, p = d.pihole.value,
-        pr = d.printer.value, ph = d.phone.value, yt = d.youtube.value, m = d.modal.value, sv = d.server?.value;
+        pr = d.printer.value, ph = d.phone.value, yt = d.youtube.value, m = d.modal.value, sv = d.server?.value, cal = d.calendar?.value;
   const left = m => m >= 60 ? `${Math.floor(m / 60)}h ${m % 60}m` : `${m} min`;
   const busy = pr && (pr.state === "printing" || pr.state === "paused");
   // cât printează, căsuța e lată și are poza din cameră (reîncărcată la fiecare load)
@@ -28,8 +28,11 @@ function render(d) {
     <div>${dot(sv.disk.used_pct > 90 ? "bad" : "ok")}disc ${sv.disk.used_pct}% <span class="sub">· ${sv.disk.free_gb} GB liberi</span></div>
     <div title="${esc(sv.backups.map(b => `${b.name}: ${b.when}`).join(" · "))}">${dot(backupsOk ? "ok" : "bad")}backup ${backupsOk ? "ok" : sv.backups.filter(b => !b.ok).map(b => esc(b.name)).join(", ") + " a dat greș"}</div>
     ${sv.net ? `<div>${dot(!sv.net.up ? "bad" : sv.net.drops_today ? "warn" : "ok")}net: ${!sv.net.up ? "căzut" : sv.net.drops_today ? `${sv.net.drops_today} ${sv.net.drops_today === 1 ? "cădere" : "căderi"} azi` : "fără căderi azi"}</div>` : ""}`;
+  const day = (when, evs) => evs.length ? `<div class="sub">${when}</div>` + evs.map(e => `<div>${e.time ? `<b>${e.time}</b> ` : ""}${esc(e.title)}</div>`).join("") : "";
+  const agenda = !cal ? "" : (day("azi", cal.today) + day("mâine", cal.tomorrow)) || `<div class="sub">nimic azi și mâine</div>`;
   return [
     tile("Ora", `<div class="big" id="clock"></div><div class="sub" id="date"></div>`),
+    tile(`<a href="#/calendar">Calendar</a>`, agenda, d.calendar),
     tile("Moșnița", w ? `<div class="big">${Math.round(w.temp)}°</div><div class="sub">${esc(w.desc)} · ${Math.round(w.min)}°/${Math.round(w.max)}°</div>` : "", d.weather),
     tile("Gmail", g ? `<div class="big">${g.unread}</div><div class="sub">necitite</div>` : "", d.gmail),
     tile("Otto", o ? `<div>${dot(o.up ? "ok" : "bad")}${o.up ? "merge" : esc(o.detail)}</div>` : "", d.otto),

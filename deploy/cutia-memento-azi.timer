@@ -1,0 +1,10 @@
+[Unit]
+Description=Cutia — dimineața: ce ai azi în calendar
+
+[Timer]
+OnCalendar=*-*-* 08:30:00
+Persistent=true
+Unit=cutia-memento@azi.service
+
+[Install]
+WantedBy=timers.target

@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .cache import cached
 from .settings import ROOT, Settings
-from .sources import camera, diacritics, football, notes, server, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
+from .sources import calendar, camera, diacritics, football, notes, server, gmail, iptv, karakeep, modal_credit, otto, phone, pihole, printer, weather, youtube
 
 settings = Settings.load()
 app = FastAPI(title="Cutia")
@@ -23,6 +23,7 @@ HOME_SOURCES = {
     "youtube": (youtube.fetch, 60 * 60),
     "modal": (modal_credit.fetch, 60 * 60),
     "server": (server.fetch, 60),
+    "calendar": (calendar.fetch, 15),
 }
 SPEAK = "/home/cristi/casa/anunta.sh"  # puntea Vocii casei spre boxa Nest
 
@@ -149,6 +150,26 @@ async def clip_get() -> dict:
 @app.put("/api/clip")
 async def clip_set(text: str = Body("", embed=True, max_length=200_000)) -> dict:
     return notes.set_clip(settings, text)
+
+
+@app.get("/api/calendar")
+async def calendar_list() -> list:
+    return calendar.all_events(settings)
+
+
+@app.put("/api/calendar/{event_id}")
+async def calendar_save(event_id: str, date: str = Body(..., max_length=10), title: str = Body(..., max_length=300),
+                        time: str = Body("", max_length=5), place: str = Body("", max_length=300)) -> dict:
+    try:
+        return calendar.save(settings, event_id, date, title, time, place)
+    except ValueError:
+        raise HTTPException(400, "eveniment greșit")
+
+
+@app.delete("/api/calendar/{event_id}")
+async def calendar_delete(event_id: str) -> dict:
+    calendar.delete(settings, event_id)
+    return {"ok": True}
 
 
 @app.get("/api/printer/snapshot")

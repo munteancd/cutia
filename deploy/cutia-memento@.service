@@ -1,0 +1,8 @@
+[Unit]
+Description=Cutia — memento din calendar pe WhatsApp (%i)
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/cutia
+Environment=PYTHONPATH=%h/cutia/backend
+ExecStart=%h/cutia/.venv/bin/python -m cutia.remind %i
