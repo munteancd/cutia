@@ -31,15 +31,17 @@ def _send(s: Settings, text: str) -> bool:
     return False
 
 
-def run(s: Settings, kind: str, today: date | None = None) -> bool:
-    """Trimite mementoul; True dacă a plecat un mesaj."""
+def run(s: Settings, kind: str, today: date | None = None) -> bool | None:
+    """Trimite mementoul: True a plecat, False n-a putut pleca, None ziua e liberă."""
     today = today or date.today()
     day = today + timedelta(days=1) if kind == "maine" else today
     text = calendar.message(kind, day, calendar.on_day(s, day))
-    return bool(text) and _send(s, text)
+    return _send(s, text) if text else None
 
 
 if __name__ == "__main__":
     if sys.argv[1:] not in (["maine"], ["azi"]):
         sys.exit("folosire: python -m cutia.remind maine|azi")
-    print("trimis" if run(Settings.load(), sys.argv[1]) else "nimic de trimis")
+    sent = run(Settings.load(), sys.argv[1])
+    print({True: "trimis", None: "nimic de trimis"}.get(sent, "NU s-a putut trimite"))
+    sys.exit(sent is False)  # eșecul apare ca „failed” în systemd

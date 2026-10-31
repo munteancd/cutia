@@ -80,8 +80,16 @@ def test_remind_tomorrow_sends_whatsapp(s):
 @respx.mock
 def test_remind_quiet_day_sends_nothing(s):
     route = respx.post("http://127.0.0.1:3100/send").respond(json={"success": True})
-    assert remind.run(s, "azi", date(2026, 11, 4)) is False
+    assert remind.run(s, "azi", date(2026, 11, 4)) is None
     assert not route.called
+
+
+@respx.mock
+def test_remind_failure_is_reported(s, monkeypatch):
+    monkeypatch.setattr(remind.time, "sleep", lambda _: None)
+    calendar.save(s, "a", "2026-11-04", "Interviu", "", "")
+    respx.post("http://127.0.0.1:3100/send").mock(side_effect=httpx.ConnectError("x"))
+    assert remind.run(s, "azi", date(2026, 11, 4)) is False
 
 
 @respx.mock
